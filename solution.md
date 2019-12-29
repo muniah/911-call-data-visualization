@@ -18,14 +18,14 @@ The data contains the following fields:
 
 ## Data and Setup
 ____
-** Import numpy and pandas **
+Importing numpy and pandas
 
 ```python
 import numpy as np
 import pandas as pd
 ```
 
-** Import visualization libraries and set %matplotlib inline. **
+Importing visualization libraries
 
 ```python
 import matplotlib.pyplot as plt 
@@ -34,13 +34,13 @@ sns.set_style('whitegrid')
 %matplotlib inline
 ```
 
-** Read in the csv file as a dataframe called df **
+Reading the csv file as a dataframe called df
 
 ```python
 df = pd.read_csv('911.csv')
 ```
 
-** Check the info() of the df **
+Checking the info() of the df
 
 ```python
 df.info()
@@ -61,7 +61,7 @@ df.info()
     dtypes: float64(3), int64(1), object(5)
     memory usage: 6.8+ MB
 
-** Check the head of df **
+Checking the head of df
 
 ```python
 df.head()
@@ -457,6 +457,7 @@ df.head()
 </table>
 </div>
 
+#### Analyzing and Visualizing Data
 
 Now we can grab specific attributes from a Datetime object by calling them.
 The timestamp column are actually DateTime objects, I'll be using .apply() to 

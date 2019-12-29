@@ -1,7 +1,9 @@
 
 # 911 Calls Capstone Project
 
-For this capstone project we will be analyzing some 911 call data from [Kaggle](https://www.kaggle.com/mchirico/montcoalert). The data contains the following fields:
+For this project, I shall be analyzing some 911 call data from [Kaggle](https://www.kaggle.com/mchirico/montcoalert). 
+
+The data contains the following fields:
 
 * lat : String variable, Latitude
 * lng: String variable, Longitude
@@ -13,12 +15,10 @@ For this capstone project we will be analyzing some 911 call data from [Kaggle](
 * addr: String variable, Address
 * e: String variable, Dummy variable (always 1)
 
-Just go along with this notebook and try to complete the instructions or answer the questions in bold using your Python and Data Science skills!
 
 ## Data and Setup
 ____
 ** Import numpy and pandas **
-
 
 ```python
 import numpy as np
@@ -26,7 +26,6 @@ import pandas as pd
 ```
 
 ** Import visualization libraries and set %matplotlib inline. **
-
 
 ```python
 import matplotlib.pyplot as plt 
@@ -37,14 +36,12 @@ sns.set_style('whitegrid')
 
 ** Read in the csv file as a dataframe called df **
 
-
 ```python
 df = pd.read_csv('911.csv')
 ```
 
 ** Check the info() of the df **
 
-
 ```python
 df.info()
 ```
@@ -63,38 +60,12 @@ df.info()
     e            99492 non-null int64
     dtypes: float64(3), int64(1), object(5)
     memory usage: 6.8+ MB
-
-
-
-```python
-df.info()
-```
-
-    <class 'pandas.core.frame.DataFrame'>
-    RangeIndex: 99492 entries, 0 to 99491
-    Data columns (total 9 columns):
-    lat          99492 non-null float64
-    lng          99492 non-null float64
-    desc         99492 non-null object
-    zip          86637 non-null float64
-    title        99492 non-null object
-    timeStamp    99492 non-null object
-    twp          99449 non-null object
-    addr         98973 non-null object
-    e            99492 non-null int64
-    dtypes: float64(3), int64(1), object(5)
-    memory usage: 6.8+ MB
-
 
 ** Check the head of df **
-
 
 ```python
 df.head()
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -190,20 +161,13 @@ df.head()
 </table>
 </div>
 
+## Basic Findings
 
-
-## Basic Questions
-
-** What are the top 5 zipcodes for 911 calls? **
-
+#### Top 5 zipcodes for 911 calls
 
 ```python
 df['zip'].value_counts().head(5)
 ```
-
-
-
-
     19401.0    6979
     19464.0    6643
     19403.0    4854
@@ -212,22 +176,12 @@ df['zip'].value_counts().head(5)
     Name: zip, dtype: int64
 
 
-
-
-```python
-# df['zip'].value_counts().head(5)
-```
-
-** What are the top 5 townships (twp) for 911 calls? **
+#### Top 5 townships (twp) for 911 calls
 
 
 ```python
 df['twp'].value_counts().head(5)
 ```
-
-
-
-
     LOWER MERION    8443
     ABINGTON        5977
     NORRISTOWN      5890
@@ -235,52 +189,31 @@ df['twp'].value_counts().head(5)
     CHELTENHAM      4575
     Name: twp, dtype: int64
 
-
-
-
-```python
-# df['twp'].value_counts().head(5)
-```
-
-** Take a look at the 'title' column, how many unique title codes are there? **
-
+#### No. of unique title codes in 'title' column
 
 ```python
 df['title'].nunique()
 ```
-
-
-
-
     110
-
-
-
-
-```python
-# df['title'].nunique()
-```
 
 ## Creating new features
 
-** In the titles column there are "Reasons/Departments" specified before the title code. These are EMS, Fire, and Traffic. Use .apply() with a custom lambda expression to create a new column called "Reason" that contains this string value.** 
+In the titles column there are "Reasons/Departments" specified before the title code which are 
+EMS, Fire, and Traffic. Using a custom lambda expression I have created a new column called "Reason"
+ that contains this string value.
 
-**For example, if the title column value is EMS: BACK PAINS/INJURY , the Reason column value would be EMS. **
+For example, if the title column value is EMS: BACK PAINS/INJURY , the Reason column value would 
+be EMS.
 
 
 ```python
-df['Reason']= df['title'].apply(lambda title: title.split(':')[0]) 
-# keep this technique in mind, it splits wherever it finds the colon .
+df['Reason']= df['title'].apply(lambda title: title.split(':')[0])
 ```
-
+Let's check if it worked
 
 ```python
 df.head()
 ```
-
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -381,83 +314,49 @@ df.head()
 </table>
 </div>
 
-
-
-** What is the most common Reason for a 911 call based off of this new column? **
+#### Most common Reason for a 911 call based off of this new column just been created
 
 
 ```python
 df['Reason'].value_counts()
 ```
-
-
-
-
     EMS        48877
     Traffic    35695
     Fire       14920
     Name: Reason, dtype: int64
 
-
-
-
-```python
-# df['Reason'].value_counts()
-```
-
-** Now use seaborn to create a countplot of 911 calls by Reason. **
+Let's do some visualization now. I shall use seaborn to create a countplot of 911 calls 
+by Reason.
 
 
 ```python
 sns.countplot(x='Reason', data=df, palette='viridis')
 ```
-
-
-
-
     <matplotlib.axes._subplots.AxesSubplot at 0x1a18cedbe0>
-
-
-
-
+    
 ![png](output_32_1.png)
 
-
-
-```python
-# sns.countplot(x='Reason', data=df)
-```
-
 ___
-** Now let us begin to focus on time information. What is the data type of the objects in the timeStamp column? **
 
+Now let's focus on time information. Let's see the data type of the objects in the timeStamp 
+column
 
 ```python
 type( df['timeStamp'].iloc[0])
 ```
-
-
-
-
     str
 
 
-
-** You should have seen that these timestamps are still strings. Use [pd.to_datetime](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.to_datetime.html) to convert the column from strings to DateTime objects. **
-
+As these timestamps are still strings, let's convert the column from strings to DateTime 
+objects using [pd.to_datetime](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.to_datetime.html).
 
 ```python
 df['timeStamp']= pd.to_datetime(df['timeStamp'])
 ```
 
-
 ```python
 df.head()
 ```
-
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -559,7 +458,7 @@ df.head()
 </div>
 
 
-
+# TODO: Change from here
 ** You can now grab specific attributes from a Datetime object by calling them. For example:**
 
     time = df['timeStamp'].iloc[0]

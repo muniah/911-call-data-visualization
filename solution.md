@@ -31,7 +31,6 @@ Importing visualization libraries
 import matplotlib.pyplot as plt 
 import seaborn as sns
 sns.set_style('whitegrid')
-%matplotlib inline
 ```
 
 Reading the csv file as a dataframe called df

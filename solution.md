@@ -199,7 +199,7 @@ df['title'].nunique()
 
 In the titles column there are "Reasons/Departments" specified before the title code which are 
 EMS, Fire, and Traffic. Using a custom lambda expression I have created a new column called "Reason"
- that contains this string value.
+that contains this string value.
 
 For example, if the title column value is EMS: BACK PAINS/INJURY , the Reason column value would 
 be EMS.
